@@ -60,7 +60,7 @@ while True:
                 print("You bought every last one!!")
             else:
                 product["quantity"] -= quantity_to_delete
-                print("Your set!")
+                print("Your set !")
             break
     elif command == 5:
         total_price = 0.0
