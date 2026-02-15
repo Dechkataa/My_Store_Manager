@@ -52,16 +52,20 @@ while True:
             else:
                 print("Product is not available!")
     elif command == 4:
-        search_name = input("Enter product to buy: ")
-        quantity_to_delete = int(input("How much do you want (quantity):"))
-        for product in products:
-            if quantity_to_delete >= product["quantity"]:
-                products.remove(product)
-                print("You bought every last one!!")
-            else:
-                product["quantity"] -= quantity_to_delete
-                print("Your set !")
-            break
+        if products:
+
+            search_name = input("Enter product to buy: ")
+            quantity_to_delete = int(input("How much do you want (quantity):"))
+            for product in products:
+                if quantity_to_delete >= product["quantity"]:
+                    products.remove(product)
+                    print("You bought every last one!!")
+                else:
+                    product["quantity"] -= quantity_to_delete
+                    print("Your set !")
+                break
+        else:
+            print("No products yet to buy!\n")
     elif command == 5:
         total_price = 0.0
         for product in products:
