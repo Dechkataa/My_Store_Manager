@@ -1,6 +1,22 @@
-products = []
+import json
 
 
+def load_products():
+    try:
+        with open("products.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        return []
+
+
+def new_product(products_):
+    with open("products.json", "w") as file:
+        json.dump(products_, file, indent=4)
+
+
+products = load_products()
 while True:
     command = int(input("1. Add product\n"
                         "2. Show products\n"
@@ -12,60 +28,70 @@ while True:
     if command == 6:
         break
     if command == 1:
-        product = {}
+        new_product_dict = {}
         existing_product = False
         name = input("Name: ")
-        for product in products:
-            if name == product["name"]:
-                quantity = int(input("There is existing product.Add quantity:"))
-                product["quantity"] += quantity
+
+        for prod in products:
+            if name == prod["name"]:
+                quantity = int(input("There is existing product. Add quantity: "))
+                prod["quantity"] += quantity
                 existing_product = True
+                new_product(products)
                 break
         if not existing_product:
-            product["name"] = name
-            price = float(input("price: "))
-            quantity = int(input("quantity: "))
-            product["price"] = price
-            product["quantity"] = quantity
-            products.append(product)
+            new_product_dict["name"] = name
+            new_product_dict["price"] = float(input("price: "))
+            new_product_dict["quantity"] = int(input("quantity: "))
+            products.append(new_product_dict)
+            new_product(products)
             print("Product has been added")
     elif command == 2:
         search_name = input("Enter product name: \n")
-
+        found = False
         for product in products:
             if product["name"] == search_name:
                 print(f"Name: {product['name']}\n"
                       f"Price: {product['price']}\n"
                       f"Quantity: {product['quantity']}")
+                found = True
                 break
-            else:
-                print("Not Found!")
+        if not found:
+            print("Not Found!")
 
     elif command == 3:
 
         search_name = input("Enter product name: ")
-
+        product_found = False
         for product in products:
             if product["name"] == search_name:
                 print("Product is available!")
+                product_found = True
                 break
-            else:
-                print("Product is not available!")
+        if not product_found:
+            print("Product is not available!")
     elif command == 4:
         if products:
 
             search_name = input("Enter product to buy: ")
             quantity_to_delete = int(input("How much do you want (quantity):"))
+            found = False
             for product in products:
-                if quantity_to_delete >= product["quantity"]:
-                    products.remove(product)
-                    print("You bought every last one!!")
-                else:
-                    product["quantity"] -= quantity_to_delete
-                    print("Your set !")
-                break
+                if product["name"] == search_name:
+                    found = True
+                    if quantity_to_delete >= product["quantity"]:
+                        products.remove(product)
+                        print("You bought every last one!!")
+                    else:
+                        product["quantity"] -= quantity_to_delete
+                        print("Your set!")
+                    new_product(products)
+                    break
+            if not found:
+                print("Product not found!")
         else:
             print("\nNo products yet to buy!\n")
+
     elif command == 5:
         total_price = 0.0
         for product in products:
@@ -74,4 +100,3 @@ while True:
         print(f"Sum of all products:{total_price}")
     else:
         print("Invalid input!")
-
