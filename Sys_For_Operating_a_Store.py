@@ -65,7 +65,7 @@ while True:
                     print("Your set !")
                 break
         else:
-            print("No products yet to buy!\n")
+            print("\nNo products yet to buy!\n")
     elif command == 5:
         total_price = 0.0
         for product in products:
