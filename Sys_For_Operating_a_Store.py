@@ -19,8 +19,8 @@ def new_product(products_):
 products = load_products()
 while True:
     command = int(input("1. Add product\n"
-                        "2. Show products\n"
-                        "3. Search product\n"
+                        "2. Show product\n"
+                        "3. Show All products\n"
                         "4. Buy product\n"
                         "5. Total value\n"
                         "6. Exit\n"
@@ -60,16 +60,12 @@ while True:
             print("Not Found!")
 
     elif command == 3:
-
-        search_name = input("Enter product name: ")
-        product_found = False
         for product in products:
-            if product["name"] == search_name:
-                print("Product is available!")
-                product_found = True
-                break
-        if not product_found:
-            print("Product is not available!")
+            print(f"Name: {product['name']}\n"
+                  f"Price: {product['price']}\n"
+                  f"Quantity: {product['quantity']}\n"
+                  f"-------------------------------\n"
+                  f"-------------------------------")
     elif command == 4:
         if products:
 
