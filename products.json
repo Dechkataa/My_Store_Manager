@@ -1,5 +1,5 @@
 [
-        {
+    {
         "name": "Cherry",
         "price": 3.3,
         "quantity": 30
@@ -12,11 +12,6 @@
     {
         "name": "Apple",
         "price": 1.5,
-        "quantity": 20
-    },
-    {
-        "name": "Kiwi",
-        "price": 6.0,
-        "quantity": 12
+        "quantity": 18
     }
 ]
